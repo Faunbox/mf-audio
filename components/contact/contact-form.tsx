@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Button } from "../ui/button";
 const formVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -98,9 +99,9 @@ export default function ContactForm() {
         />
       </motion.div>
       <motion.div variants={itemVariants}>
-        <button type="submit" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Sending..." : "Send Message"}
-        </button>
+        </Button>
       </motion.div>
     </motion.form>
   );

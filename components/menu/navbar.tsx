@@ -33,7 +33,7 @@ const Navbar = () => {
               alt="Logo"
               width={120}
               height={40}
-              className="mr-4"
+              className="mr-4 "
             />
           </div>
           <div className="hidden md:flex justify-center space-x-4 w-1/3">
