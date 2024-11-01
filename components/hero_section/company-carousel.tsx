@@ -1,5 +1,9 @@
+'use client'
 import Image from 'next/image'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
+
+
 
 // Company data
 const companies = [
@@ -16,6 +20,11 @@ export default function CompanyCarousel() {
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <h2 className="text-2xl font-bold mb-6 text-center">Our Partners</h2>
       <Carousel
+      plugins={[
+        Autoplay({
+          delay: 2000,
+        }),
+      ]}
         opts={{
           align: "start",
           loop: true,
@@ -40,8 +49,8 @@ export default function CompanyCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        {/* <CarouselPrevious />
+        <CarouselNext /> */}
       </Carousel>
     </div>
   )
