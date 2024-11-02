@@ -3,10 +3,12 @@ import ContactForm from '@/components/contact/contact-form'
 import CompanyInfo from '@/components/contact/company-info'
 import { Skeleton } from "@/components/ui/skeleton"
 import { Suspense } from 'react'
+import FAQ from '@/components/faq/faq-component'
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
+    <div className="flex flex-col">
       <div className="relative w-full min-h-[25vh]">
         <Image
           src="/images/logo_zdjecie.jpg"
@@ -30,6 +32,7 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
+    <FAQ /></>
   )
 }
 

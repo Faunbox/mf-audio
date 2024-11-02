@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
@@ -9,7 +9,7 @@ const Navbar = () => {
   const menuOptions = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Offert", href: "/services" },
+    { name: "Offert", href: "/offert" },
     { name: "Contact", href: "/contact" },
   ];
 
