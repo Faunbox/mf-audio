@@ -4,6 +4,25 @@ import CompanyInfo from '@/components/contact/company-info'
 import { Skeleton } from "@/components/ui/skeleton"
 import { Suspense } from 'react'
 import FAQ from '@/components/faq/faq-component'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Contact',
+  description: 'Learn more about our company, our mission, and our team.',
+  openGraph: {
+    title: 'Contact | MF Audio',
+    description: 'Learn more about our company, our mission, and our team.',
+    url: 'https://www.myamazingwebsite.com/about',
+    images: [
+      {
+        url: 'https://www.myamazingwebsite.com/about-og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'About Us - My Amazing Website',
+      },
+    ],
+  },
+}
 
 export default function ContactPage() {
   return (
