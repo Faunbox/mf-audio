@@ -63,17 +63,17 @@ function AnimatedSection({ children }: { children: React.ReactNode }) {
 
 export default function AboutUs() {
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-white text-black overflow-x-hidden">
       <Header title="About Us" />
 
-      <main className="container mx-auto px-4 py-12 items-center justify-center">
-        <div className="w-screen bg-gradient-to-b from-white from-40% to-60% to-black text-black -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 px-4 sm:px-6 md:px-8 lg:px-16 min-h-screen items-center justify-center">
+      <main className=" mx-auto px-4 py-12 items-center justify-center">
+        <div className="items-center justify-center container mx-auto">
           <AnimatedSection>
-            <div className="container mx-auto">
+            <div className=" mx-auto">
               <h2 className="text-3xl font-bold mb-4 text-black pt-8">Our Founders</h2>
               <div className="grid md:grid-cols-2 gap-8 pb-8">
                 {founders.map((founder, index) => (
-                  <Card key={founder.name+index} className="flex flex-col md:flex-row items-center md:items-start bg-transparent border-none shadow-none">
+                  <div key={founder.name+index} className="flex flex-col md:flex-row items-center md:items-start bg-transparent border-none shadow-none">
                     <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6 flex justify-center items-center">
                       <Image
                         src={founder.avatar}
@@ -84,20 +84,20 @@ export default function AboutUs() {
                       />
                     </div>
                     <div className="flex-grow text-center md:text-left">
-                      <CardHeader>
-                        <CardTitle className="text-black">{founder.name}</CardTitle>
-                        <CardDescription className="text-gray-600">{founder.role}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
+                      <div>
+                        <h3 className="text-black">{founder.name}</h3>
+                        <p className="text-gray-600">{founder.role}</p>
+                      </div>
+                      <div>
                         <p className="text-black">{founder.bio}</p>
-                      </CardContent>
+                      </div>
                     </div>
-                  </Card>
+                  </div>
                 ))}
               </div>
             </div>
-            <div className="container mx-auto">
-              <div className=" text-white shadow-lg py-8">
+            <div className=" mx-auto">
+              <div className=" text-black py-8">
                 <h2 className="text-4xl font-bold mb-4">Our Mission</h2>
                 <p className="text-xl leading-relaxed font-medium">{mission}</p>
               </div>
@@ -107,16 +107,18 @@ export default function AboutUs() {
 
         <div className="relative h-64 mb-16 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-16 inset-x-0 z-10">
           <Image
-            src="/placeholder.svg?height=200&width=1200"
+            src="/images/logo_zdjecie.jpg"
             alt="Separator image"
             layout="fill"
             objectFit="cover"
-            className="w-screen"
+            className="w-full"
           />
         </div>
 
         <AnimatedSection>
-          <h2 className="text-3xl font-bold mb-4">What Our Clients Say</h2>
+<div className="flex flex-col container mx-auto">
+
+          <h2 className="text-3xl font-bold mb-4 ">What Our Clients Say</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {reviews.map((review, index) => (
               <Card key={review.name+index} className="relative shadow-xl">
@@ -127,7 +129,7 @@ export default function AboutUs() {
                     width={50}
                     height={50}
                     className="rounded-full"
-                  />
+                    />
                   <div>
                     <CardTitle>{review.name}</CardTitle>
                     <CardDescription>{review.company}</CardDescription>
@@ -141,6 +143,7 @@ export default function AboutUs() {
               </Card>
             ))}
           </div>
+            </div>
         </AnimatedSection>
 
         <AnimatedSection>
@@ -149,7 +152,7 @@ export default function AboutUs() {
             <div className="flex flex-col md:flex-row items-start">
               <div className="md:w-1/2 mb-4 md:mb-0 md:mr-8">
                 <Image
-                  src="/placeholder.svg?height=400&width=400"
+                  src="/images/glosnik.jpg"
                   alt="Why We Do It"
                   width={400}
                   height={400}
@@ -164,6 +167,8 @@ export default function AboutUs() {
         </AnimatedSection>
 
         <AnimatedSection>
+          <div className="flex flex-col container mx-auto">
+
           <h2 className="text-3xl font-bold mb-4 text-center">Our Goals</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {goals.map((goal, index) => (
@@ -182,6 +187,7 @@ export default function AboutUs() {
               </Card>
             ))}
           </div>
+                </div>
         </AnimatedSection>
       </main>
     </div>

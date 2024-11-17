@@ -1,6 +1,7 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -28,13 +29,15 @@ const Navbar = () => {
       <nav className="fixed top-0 left-0 right-0 z-30 bg-black bg-opacity-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center w-1/3">
+          <Link href={"/"}>
             <Image
               src="/placeholder.svg"
               alt="Logo"
               width={120}
               height={40}
               className="mr-4 "
-            />
+              />
+              </Link>
           </div>
           <div className="hidden md:flex justify-center space-x-4 w-1/3">
             {menuOptions.map((item, index) => (

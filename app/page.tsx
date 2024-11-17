@@ -5,7 +5,8 @@ import OffertHomePage from "@/components/hero_section/offertText";
 import OurMissionSection from "@/components/hero_section/our_mission";
 import WhyUsSection from "@/components/hero_section/why_us";
 
-export default function Page() {
+export default async function Page() {
+
   return (
     <>
       <HeroSectionComponent />
@@ -13,7 +14,7 @@ export default function Page() {
       <OurMissionSection />
       <OffertHomePage />
       <CompanyCarousel />
-      <SpeakerLocations/>
+      <SpeakerLocations />
     </>
   );
 }
