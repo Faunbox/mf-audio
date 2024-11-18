@@ -18,7 +18,7 @@ const offers: Offer[] = [
       "Versatile setups for various room sizes",
       "Easy installation and user-friendly controls"
     ],
-    imageSrc: "/placeholder.svg?height=400&width=600",
+    imageSrc: "/images/stereo.jpg",
     imageAlt: "2.1 and 5.1 audio systems"
   },
   {
@@ -30,7 +30,7 @@ const offers: Offer[] = [
       "Various materials available, including wood and metal",
       "Customizable heights and finishes"
     ],
-    imageSrc: "/placeholder.svg?height=400&width=600",
+    imageSrc: "/images/stands.jpg",
     imageAlt: "Custom stands"
   }
 ]
@@ -43,13 +43,14 @@ export default function OffertHomePage() {
         
         {offers.map((offer, index) => (
           <div key={index} className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center ${index < offers.length - 1 ? 'mb-12' : ''}`}>
-            <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'} mb-6 md:mb-0`}>
+            <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'} mb-6 md:mb-0 `}>
               <Image
                 src={offer.imageSrc}
                 alt={offer.imageAlt}
-                width={600}
-                height={400}
-                className="rounded-lg shadow-lg"
+                width={400}
+                height={230}
+                loading="lazy"
+                className="rounded-lg shadow-lg object-cover"
               />
             </div>
             <div className="md:w-1/2">

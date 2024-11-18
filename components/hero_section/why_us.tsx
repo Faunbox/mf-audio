@@ -7,17 +7,17 @@ import { Button } from "@/components/ui/button"
 export default function WhyUsSection() {
   const cards = [
     {
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/images/quality.jpg",
       title: "Quality Service",
       description: "We provide top-notch service that exceeds expectations.",
     },
     {
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/images/team.jpg",
       title: "Expert Team",
       description: "Our team consists of industry experts with years of experience.",
     },
     {
-      image: "/placeholder.svg?height=200&width=300",
+      image: "/images/solutions.jpg",
       title: "Innovative Solutions",
       description: "We offer cutting-edge solutions to complex problems.",
     },

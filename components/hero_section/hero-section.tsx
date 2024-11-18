@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 export function HeroSectionComponent() {
   const [isMounted, setIsMounted] = useState(false)
@@ -68,7 +69,9 @@ export function HeroSectionComponent() {
               variants={textVariants}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
+              <Link href={"/offert"}>
               Get Started
+              </Link>
             </motion.button>
           )}
         </div>
