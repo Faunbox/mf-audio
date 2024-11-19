@@ -1,22 +1,26 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/hooks/use-toast"
-
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+// import { useFormStatus } from "react-dom";
+import { sendContactEmail } from "@/actions/contactForm";
 
 const formVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 const itemVariants = {
   hidden: { opacity: 0, x: -20 },
@@ -24,82 +28,131 @@ const itemVariants = {
     opacity: 1,
     x: 0,
     transition: {
-      type: 'spring',
-      stiffness: 100
-    }
-  }
-}
+      type: "spring",
+      stiffness: 100,
+    },
+  },
+};
+
+export type ResponseData = {
+  status?: string;
+  message?: string;
+};
+
+const validationSchema = z.object({
+  name: z.string().min(1, { message: "Imie jest wymagane" }),
+  email: z
+    .string()
+    .min(1, { message: "Adres email jest wymagany" })
+    .email({ message: "Adres email musi być poprawny" }),
+  description: z
+    .string()
+    .min(10, { message: "Wiadomość musi posiadać minimum 10 znaków" })
+    .max(300, { message: "Wiadomość musi posiadać mniej niż 300 znaków" }),
+});
+type ValidationSchema = z.infer<typeof validationSchema>;
 
 export default function ContactForm() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { toast } = useToast()
+  const [response, setResponse] = useState<ResponseData>({
+    status: "",
+    message: "",
+  });
+  const [disabled, setDisabled] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+  // const { pending } = useFormStatus();
+  const {
+    register,
+    handleSubmit,
+    formState: {},
+  } = useForm<ValidationSchema>({
+    resolver: zodResolver(validationSchema),
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
-    // Reset form and show success message
-    setName('')
-    setEmail('')
-    setMessage('')
-    setIsSubmitting(false)
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    })
+  async function onSend(data: ValidationSchema) {
+    try {
+      setIsSubmitting(true);
+      const formData = new FormData();
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, JSON.stringify(value));
+      });
+      const res = await sendContactEmail(formData);
+      setResponse(res.response);
+    } catch {
+      alert("Błąd podczas wysyłania formularza");
+    } finally {
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      setIsSubmitting(false);
+      setDisabled(true);
+      console.log(response);
+    }
   }
+
+  const onSubmit: SubmitHandler<ValidationSchema> = async (
+    data: ValidationSchema
+  ) => await onSend(data);
 
   return (
     <motion.form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="space-y-4"
       variants={formVariants}
       initial="hidden"
       animate="visible"
     >
       <motion.div variants={itemVariants}>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Name
+        </label>
         <Input
           id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          type="name"
+          {...register("name")}
           required
           className="mt-1"
         />
       </motion.div>
       <motion.div variants={itemVariants}>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Email
+        </label>
         <Input
           id="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          {...register("email")}
           required
           className="mt-1"
         />
       </motion.div>
       <motion.div variants={itemVariants}>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+        <label
+          htmlFor="message"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Message
+        </label>
         <Textarea
-          id="message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          id="description"
+          {...register("description")}
           required
           className="mt-1"
           rows={4}
         />
       </motion.div>
       <motion.div variants={itemVariants}>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+        <Button type="submit" disabled={isSubmitting || disabled}>
+          {isSubmitting ? "Sending..." : "Send Message"}
         </Button>
       </motion.div>
     </motion.form>
-  )
+  );
 }
