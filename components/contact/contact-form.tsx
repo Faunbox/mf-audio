@@ -64,7 +64,7 @@ export default function ContactForm() {
   const {
     register,
     handleSubmit,
-    formState: {},
+    formState: { errors },
   } = useForm<ValidationSchema>({
     resolver: zodResolver(validationSchema),
   });
@@ -77,6 +77,7 @@ export default function ContactForm() {
         formData.append(key, JSON.stringify(value));
       });
       const res = await sendContactEmail(formData);
+
       setResponse(res.response);
     } catch {
       alert("Błąd podczas wysyłania formularza");
@@ -117,6 +118,9 @@ export default function ContactForm() {
           required
           className="mt-1"
         />
+        {errors.name && (
+          <p className="text-xs italic text-error ">{errors.name?.message}</p>
+        )}
       </motion.div>
       <motion.div variants={itemVariants}>
         <label
@@ -132,6 +136,9 @@ export default function ContactForm() {
           required
           className="mt-1"
         />
+        {errors.email && (
+          <p className="text-xs italic text-error ">{errors.email?.message}</p>
+        )}
       </motion.div>
       <motion.div variants={itemVariants}>
         <label
@@ -147,6 +154,11 @@ export default function ContactForm() {
           className="mt-1"
           rows={4}
         />
+        {errors.description && (
+          <p className="text-xs italic text-error ">
+            {errors.description?.message}
+          </p>
+        )}
       </motion.div>
       <motion.div variants={itemVariants}>
         <Button type="submit" disabled={isSubmitting || disabled}>

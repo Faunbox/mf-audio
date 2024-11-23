@@ -2,7 +2,7 @@
 import sgMail from "@sendgrid/mail";
 
 interface mail {
-  to: string;
+  to: string|string[];
   from: string;
   subject: string;
   text: string;
@@ -15,7 +15,7 @@ type ResponseData = {
 };
 
 export async function sendContactEmail(formData: FormData) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
+  sgMail.setApiKey(process.env.SENDGRID_EMAIL1_API_KEY || "");
   const name = formData.get("name");
   const email = formData.get("email");
   const description = formData.get("description");
@@ -34,21 +34,20 @@ export async function sendContactEmail(formData: FormData) {
     </div>`,
   };
 
+ 
   await sgMail
     .send(msgToCompany)
     .then(() => {
       response = {
         status: "success",
-        message: "Wiadomość wysłana",
+        message: "Message send",
       };
     })
     .catch((error) => {
       response = {
         status: "error",
-        message: `Wstąpił błąd podczas wysyłania. Spróbuj ponownie później, ${error}`,
+        message: `Wstąpił błąd podczas wysyłania maila do firmy. Spróbuj ponownie później, ${error}`,
       };
-    });
-
-  
+    })
   return { response };
 }
