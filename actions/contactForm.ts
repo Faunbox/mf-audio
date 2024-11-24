@@ -1,8 +1,8 @@
 "use server";
-import sgMail from "@sendgrid/mail";
+import sgMail, { MailDataRequired } from "@sendgrid/mail";
 
 interface mail {
-  to: string|string[];
+  to: string | string[];
   from: string;
   subject: string;
   text: string;
@@ -14,10 +14,25 @@ type ResponseData = {
   message?: string;
 };
 
+export type TemplateIdEmail = {
+  personalizations: {
+    to: string | string[];
+    dynamic_template_data: unknown;
+  };
+  from: {
+    email: string | string[];
+    name: string;
+  };
+  reply_to: { email: string | string[]; name: string };
+  template_id: string;
+};
+
+type Template = MailDataRequired | MailDataRequired[] | TemplateIdEmail;
+
 export async function sendContactEmail(formData: FormData) {
   sgMail.setApiKey(process.env.SENDGRID_EMAIL1_API_KEY || "");
-  const name = formData.get("name");
-  const email = formData.get("email");
+  const name = formData.get("name")?.toString();
+  const email = formData.get("email")?.toString();
   const description = formData.get("description");
 
   let response: ResponseData = {};
@@ -34,7 +49,31 @@ export async function sendContactEmail(formData: FormData) {
     </div>`,
   };
 
- 
+  const customerEmail = email?.replace(/"/g, "");
+  const customerName = name?.replace(/"/g, "");
+  console.log(customerEmail);
+
+  const emailToCustomer: Template = {
+    //@ts-expect-error:Jebac to maczetami
+    personalizations: [
+      {
+        to: customerEmail,
+        dynamic_template_data: {
+          name: customerName,
+        },
+      },
+    ],
+    from: {
+      email: process.env.SENDGRID_EMAIL!,
+      name: "MF Audio",
+    },
+    reply_to: {
+      email: process.env.SENDGRID_EMAIL!,
+      name: "MF Audio",
+    },
+    template_id: "d-6631ef651ed14dd2a924d1d296896f96",
+  };
+
   await sgMail
     .send(msgToCompany)
     .then(() => {
@@ -48,6 +87,11 @@ export async function sendContactEmail(formData: FormData) {
         status: "error",
         message: `Wstąpił błąd podczas wysyłania maila do firmy. Spróbuj ponownie później, ${error}`,
       };
-    })
+    });
+
+  await sgMail
+    //@ts-expect-error:nie chce mi sie szukac typu - jest dobrze
+    .send(emailToCustomer)
+    .then(() => console.log("wysłano maila do klienta"));
   return { response };
 }
