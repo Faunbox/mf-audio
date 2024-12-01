@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Header from "../typography/header";
+import Link from "next/link";
 
-type CategoryId = "soundbars" | "5.1systems" | "customstands" | "cables";
+type CategoryId = "bookshelf" | "woofers" | "Our systems" | "Custom stands";
 
 type Offer = {
   name: string;
@@ -18,7 +19,7 @@ type OffersByCategory = {
 };
 
 export default function AudioEquipmentOfferSection() {
-  const [activeCategory, setActiveCategory] = useState<CategoryId>("soundbars");
+  const [activeCategory, setActiveCategory] = useState<CategoryId>("bookshelf");
   const [isMobile, setIsMobile] = useState(false);
   const [isSelectOpen, setIsSelectOpen] = useState(false);
 
@@ -36,17 +37,17 @@ export default function AudioEquipmentOfferSection() {
   }, []);
 
   const categories: { id: CategoryId; name: string }[] = [
-    { id: "soundbars", name: "Soundbars" },
-    { id: "5.1systems", name: "5.1 Systems" },
-    { id: "customstands", name: "Custom Stands" },
-    { id: "cables", name: "Cables" },
+    { id: "bookshelf", name: "Bookshelf" },
+    { id: "woofers", name: "woofers" },
+    { id: "Our systems", name: "Our systems" },
+    { id: "Custom stands", name: "Custom stands" },
   ];
 
   const offers: OffersByCategory = {
-    soundbars: [
+    bookshelf: [
       {
-        name: "Premium Soundbar",
-        price: "$299.99",
+        name: "model1",
+        price: "$1500",
         image: "/placeholder.svg?height=200&width=400",
       },
       {
@@ -60,7 +61,7 @@ export default function AudioEquipmentOfferSection() {
         image: "/placeholder.svg?height=200&width=400",
       },
     ],
-    "5.1systems": [
+    "woofers": [
       {
         name: "High-end 5.1 System",
         price: "$999.99",
@@ -77,7 +78,7 @@ export default function AudioEquipmentOfferSection() {
         image: "/placeholder.svg?height=200&width=400",
       },
     ],
-    customstands: [
+    "Our systems": [
       {
         name: "Adjustable TV Stand",
         price: "$149.99",
@@ -94,7 +95,7 @@ export default function AudioEquipmentOfferSection() {
         image: "/placeholder.svg?height=200&width=400",
       },
     ],
-    cables: [
+    "Custom stands": [
       {
         name: "Premium HDMI Cable",
         price: "$29.99",
@@ -215,19 +216,21 @@ export default function AudioEquipmentOfferSection() {
                       className="rounded-lg"
                     />
                   </div>
-                  <h3 className="text-xl font-semibold text-center mb-2">
+                  <h3 className="text-xl font-semibold text-center mb-2 capitalize">
                     {offer.name}
                   </h3>
                   <p className="text-2xl font-bold text-center mb-4">
                     {offer.price}
                   </p>
+                  <Link href={`/offert/${offer.name}`}>
                   <motion.button
                     className="w-full bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-700 transition-colors"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                  >
-                    Add to Cart
+                    >
+                    Get more informations
                   </motion.button>
+                    </Link>
                 </div>
               </motion.div>
             ))}

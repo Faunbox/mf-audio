@@ -33,7 +33,7 @@ const socialMedia = [
   { name: "TikTok", icon: "tiktok", href: "https://tiktok.com/@mfaudio" },
 ];
 
-const models = ["Model A", "Model B", "Model C", "Model D", "Model E"];
+const models = ["Model1", "Model B", "Model C", "Model D", "Model E"];
 
 const companyData = {
   phone: "+1 (555) 123-4567",
@@ -180,7 +180,7 @@ export default function Footer() {
                 {models.map((model) => (
                   <li key={model}>
                     <Link
-                      href={`/models/${model.toLowerCase().replace(" ", "-")}`}
+                      href={`/offert/${model.toLowerCase().replace(" ", "-")}`}
                       className="text-gray-400 hover:text-white transition-colors"
                     >
                       {model}

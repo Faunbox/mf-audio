@@ -19,6 +19,7 @@
     "@sendgrid/mail": "^8.1.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "contentful": "^11.2.5",
     "country-flag-icons": "^1.5.13",
     "embla-carousel-autoplay": "^8.3.1",
     "embla-carousel-react": "^8.3.1",
